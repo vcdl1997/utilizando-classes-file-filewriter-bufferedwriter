@@ -1,29 +1,32 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
-		String path = "C:\\temp\\in.txt";
+		String[] lines = new String[] {"Good morning", "Good afternoon", "Good night"};
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(path))){
+		String path = "C:\\temp\\out.txt";
+		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
 			
-			String line = br.readLine();
+//			A Classe FileWriter verificará o caminho e o nome do arquivo informado, caso exista o mesmo será substituido,
+//			caso não exista o mesmo será criado.
 			
-			while(line != null) {
-				System.out.println(line);
-				line = br.readLine();
+//			Para contornar isso e manter o conteúdo do arquivo intacto, basta passar um segundo parâmetro com o valor true.
+//			Desta forma o novo conteudo será inserido no final do arquivo.
+			
+			for(String str : lines) {
+				bw.write(str);
+				bw.newLine(); // Quebra a linha
 			}
 			
 		}catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
-		
 	}
 
 }
