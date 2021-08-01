@@ -1,35 +1,21 @@
 package application;
-
-import java.io.File;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Program {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws ParseException {
 		
-		System.out.println("Enter a folder path: ");
-		String strPath = sc.nextLine();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date d1 = sdf.parse("30/07/2021");
+		Date d2 = sdf.parse("01/08/2021");
+		Long diff = d2.getTime() - d1.getTime();
 		
-		File path = new File(strPath);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(diff);
 		
-		File[] folders = path.listFiles(File::isDirectory);
-		System.out.println("FOLDERS: ");
-		for(File folder : folders) {
-			System.out.println(folder);
-		}
-		
-		System.out.println();
-		
-		File[] files = path.listFiles(File::isFile);
-		System.out.println("FILES: ");
-		for(File file : files) {
-			System.out.println(file);
-		}
-		
-		boolean success = new File(strPath + "\\subdir").mkdir();
-		if(success) System.out.println("Directory created successfully: " + success);
-		
-		sc.close();
+		System.out.println(calendar.get(Calendar.DAY_OF_MONTH)); //Diferença em dias
 	}
 }
