@@ -1,32 +1,35 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
-		String[] lines = new String[] {"Good morning", "Good afternoon", "Good night"};
+		Scanner sc = new Scanner(System.in);
 		
-		String path = "C:\\temp\\out.txt";
+		System.out.println("Enter a folder path: ");
+		String strPath = sc.nextLine();
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-			
-//			A Classe FileWriter verificará o caminho e o nome do arquivo informado, caso exista o mesmo será substituido,
-//			caso não exista o mesmo será criado.
-			
-//			Para contornar isso e manter o conteúdo do arquivo intacto, basta passar um segundo parâmetro com o valor true.
-//			Desta forma o novo conteudo será inserido no final do arquivo.
-			
-			for(String str : lines) {
-				bw.write(str);
-				bw.newLine(); // Quebra a linha
-			}
-			
-		}catch (IOException e) {
-			e.printStackTrace();
+		File path = new File(strPath);
+		
+		File[] folders = path.listFiles(File::isDirectory);
+		System.out.println("FOLDERS: ");
+		for(File folder : folders) {
+			System.out.println(folder);
 		}
+		
+		System.out.println();
+		
+		File[] files = path.listFiles(File::isFile);
+		System.out.println("FILES: ");
+		for(File file : files) {
+			System.out.println(file);
+		}
+		
+		boolean success = new File(strPath + "\\subdir").mkdir();
+		if(success) System.out.println("Directory created successfully: " + success);
+		
+		sc.close();
 	}
-
 }
